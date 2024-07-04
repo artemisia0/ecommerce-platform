@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Product" ALTER COLUMN "extraPreviewImage" DROP DEFAULT,
+ALTER COLUMN "previewImage" DROP DEFAULT,
+ALTER COLUMN "priceInUSD" DROP DEFAULT;
