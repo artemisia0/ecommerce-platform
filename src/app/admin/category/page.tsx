@@ -96,10 +96,12 @@ export default function Page() {
 
 	const fetchFormSubmitCallback = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
+		setStatusMessage("")
 		const formData = new FormData(event.target as HTMLFormElement)
 		const categoryName = formData.get('categoryName') as string
 		fetchCategoryByName(categoryName)
 			.then(res => {
+				console.log(JSON.stringify(res))
 				setCategoryNameValue(res.name)
 				setCategoryDescriptionValue(res.description)
 				setListEditorState(res.products.map((p) => p.name))
@@ -109,7 +111,6 @@ export default function Page() {
 			.catch(err => {
 				console.error(err)
 			})
-		setStatusMessage("")
 	}
 
 	return (

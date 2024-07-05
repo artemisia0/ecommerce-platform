@@ -6,21 +6,31 @@ import type CollectionData from '@/lib/CollectionData'
 
 const prisma = new PrismaClient()
 
-export async function createCollection(collectionData: CollectionData): 
-Promise<{
-	statusMessage: string;
-	statusSuccess: boolean;
-}>
-{
-	const maybeFoundCollection = await prisma.collection.findUnique({
-		where: {
-			name: collectionData.name,
-		}
-	})
-
-	if (maybeFoundCollection != null) {
+async function collectionDataValidnessStatus(collectionData: CollectionData) {
+	if (collectionData.name.length === 0) {
 		return {
-			statusMessage: `Collection with name '${collectionData.name}' already exists.`,
+			statusMessage: "Name must not be empty.",
+			statusSuccess: false,
+		}
+	}
+
+	if (collectionData.name.length > 80) {
+		return {
+			statusMessage: "Name is too long",
+			statusSuccess: false,
+		}
+	}
+
+	if (collectionData.description.length === 0) {
+		return {
+			statusMessage: "Description must not be empty.",
+			statusSuccess: false,
+		}
+	}
+
+	if (collectionData.description.length > 1000) {
+		return {
+			statusMessage: "Description is too long.",
 			statusSuccess: false,
 		}
 	}
@@ -44,13 +54,43 @@ Promise<{
 			}
 		}
 	}
+
+	return {
+		statusMessage: "",
+		statusSuccess: true,
+	}
+}
+
+async function collectionExistsByName(collectionName: string) {
+	const maybeFound = await prisma.collection.findUnique({ where: { name: collectionName } })
+	return maybeFound != null
+}
+
+export async function createCollection(collectionData: CollectionData): 
+Promise<{
+	statusMessage: string;
+	statusSuccess: boolean;
+}>
+{
+	if (await collectionExistsByName(collectionData.name)) {
+		return {
+			statusMessage: `Collection with name '${collectionData.name}' already exists.`,
+			statusSuccess: false,
+		}
+	}
+
+	const status = await collectionDataValidnessStatus(collectionData)
+	if (!status.statusSuccess) {
+		return status
+	}
+
 	try {
 		const createdCollection = await prisma.collection.create({
 			data: {
 				name: collectionData.name,
 				description: collectionData.description,
 				products: {
-					connect: products,
+					connect: collectionData.productNames.map((name) => ({name})),
 				},
 			}
 		})
@@ -67,7 +107,7 @@ Promise<{
 }
 
 export async function fetchCollectionByName(collectionName: string) {
-	const found = await prisma.collection.findUniqueOrThrow({
+	const found = await prisma.collection.findUnique({
 		where: {
 			name: collectionName,
 		},
@@ -81,6 +121,16 @@ export async function fetchCollectionByName(collectionName: string) {
 			}
 		},
 	})
+
+	if (found == null) {
+		return {
+			statusMessage: "Could not find such a collection.",
+			statusSuccess: false,
+			name: "",
+			description: "",
+			products: [],
+		}
+	}
 
 	return {
 		statusMessage: "Collection data successfully fetched.",
@@ -106,37 +156,16 @@ Promise<{
 	statusMessage: string;
 	statusSuccess: boolean;
 }> {
-	const maybeFoundCollection = await prisma.collection.findUnique({
-		where: {
-			name: collectionData.name,
-		}
-	})
-
-	if (maybeFoundCollection == null) {
+	if (!(await collectionExistsByName(collectionData.name))) {
 		return {
 			statusMessage: `No collection with provided name.`,
 			statusSuccess: false,
 		}
 	}
 
-	const products = []
-	for (const productName of collectionData.productNames) {
-		try {
-			const product = await prisma.product.findUniqueOrThrow({
-				where: {
-					name: productName,
-				},
-				select: {
-					id: true
-				}
-			})
-			products.push(product)
-		} catch (err) {
-			return {
-				statusMessage: `Product with name '${productName}' does not exist.`,
-				statusSuccess: false,
-			}
-		}
+	const status = await collectionDataValidnessStatus(collectionData)
+	if (!status.statusSuccess) {
+		return status
 	}
 
 	try {
@@ -147,7 +176,7 @@ Promise<{
 			data: {
 				description: collectionData.description,
 				products: {
-					connect: products,
+					connect: collectionData.productNames.map((name) => ({name})),
 				}
 			}
 		})

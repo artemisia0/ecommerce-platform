@@ -12,45 +12,25 @@ Promise<{
 	statusSuccess: boolean;
 }>
 {
-	const maybeFoundCategory = await prisma.category.findUnique({
-		where: {
-			name: categoryData.name,
-		}
-	})
-
-	if (maybeFoundCategory != null) {
+	if (await categoryExistsByName(categoryData.name)) {
 		return {
 			statusMessage: `Category with name '${categoryData.name}' already exists.`,
 			statusSuccess: false,
 		}
 	}
 
-	const products = []
-	for (const productName of categoryData.productNames) {
-		try {
-			const product = await prisma.product.findUniqueOrThrow({
-				where: {
-					name: productName,
-				},
-				select: {
-					id: true
-				}
-			})
-			products.push(product)
-		} catch (err) {
-			return {
-				statusMessage: `Product with name '${productName}' does not exist.`,
-				statusSuccess: false,
-			}
-		}
+	const status = await categoryDataValidnessStatus(categoryData)
+	if (!status.statusSuccess) {
+		return status
 	}
+
 	try {
 		const createdCategory = await prisma.category.create({
 			data: {
 				name: categoryData.name,
 				description: categoryData.description,
 				products: {
-					connect: products,
+					connect: categoryData.productNames.map((name) => ({name})),
 				},
 			}
 		})
@@ -67,7 +47,7 @@ Promise<{
 }
 
 export async function fetchCategoryByName(categoryName: string) {
-	const found = await prisma.category.findUniqueOrThrow({
+	const found = await prisma.category.findUnique({
 		where: {
 			name: categoryName,
 		},
@@ -81,6 +61,16 @@ export async function fetchCategoryByName(categoryName: string) {
 			}
 		},
 	})
+
+	if (found == null) {
+		return {
+			statusMessage: "Could not find such a category.",
+			statusSuccess: false,
+			name: "",
+			description: "",
+			products: [],
+		}
+	}
 
 	return {
 		statusMessage: "Category data successfully fetched.",
@@ -101,20 +91,31 @@ export async function listCategories(jsonCategoryAsString: string) {
 	}
 }
 
-export async function updateCategory(categoryData: CategoryData):
-Promise<{
-	statusMessage: string;
-	statusSuccess: boolean;
-}> {
-	const maybeFoundCategory = await prisma.category.findUnique({
-		where: {
-			name: categoryData.name,
-		}
-	})
-
-	if (maybeFoundCategory == null) {
+async function categoryDataValidnessStatus(categoryData: CategoryData) {
+	if (categoryData.name.length === 0) {
 		return {
-			statusMessage: `No category with provided name.`,
+			statusMessage: "Name must not be empty.",
+			statusSuccess: false,
+		}
+	}
+
+	if (categoryData.name.length > 80) {
+		return {
+			statusMessage: "Name is too long",
+			statusSuccess: false,
+		}
+	}
+
+	if (categoryData.description.length === 0) {
+		return {
+			statusMessage: "Description must not be empty.",
+			statusSuccess: false,
+		}
+	}
+
+	if (categoryData.description.length > 1000) {
+		return {
+			statusMessage: "Description is too long.",
 			statusSuccess: false,
 		}
 	}
@@ -139,6 +140,34 @@ Promise<{
 		}
 	}
 
+	return {
+		statusMessage: "",
+		statusSuccess: true,
+	}
+}
+
+async function categoryExistsByName(categoryName: string) {
+	const maybeFound = await prisma.category.findUnique({ where: { name: categoryName } })
+	return maybeFound != null
+}
+
+export async function updateCategory(categoryData: CategoryData):
+Promise<{
+	statusMessage: string;
+	statusSuccess: boolean;
+}> {
+	if (!(await categoryExistsByName(categoryData.name))) {
+		return {
+			statusMessage: `No category with provided name.`,
+			statusSuccess: false,
+		}
+	}
+
+	const status = await categoryDataValidnessStatus(categoryData)
+	if (!status.statusSuccess) {
+		return status
+	}
+
 	try {
 		await prisma.category.update({
 			where: {
@@ -147,7 +176,7 @@ Promise<{
 			data: {
 				description: categoryData.description,
 				products: {
-					connect: products,
+					connect: categoryData.productNames.map((name) => ({name})),
 				}
 			}
 		})
