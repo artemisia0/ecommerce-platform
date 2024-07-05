@@ -64,7 +64,7 @@ export default function MainDrawer() {
 	)
 
 	return (
-		<Drawer open={isDrawerOpen} onClose={closeDrawer} className="bg-transparent backdrop-blur-sm backdrop-saturate-1 bg-white/80">
+		<Drawer open={isDrawerOpen} onClose={closeDrawer} className="bg-transparent backdrop-blur-sm backdrop-saturate-1 bg-white/80 overflow-y-scroll">
 			<div className="flex justify-end items-center align-center">
 				<IconButton onClick={closeDrawer} variant="text" color="blue-gray" className="rounded-full text-black">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
