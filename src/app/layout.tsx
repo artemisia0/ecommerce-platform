@@ -22,9 +22,11 @@ export default function RootLayout({
     <html lang="en">
 			<Provider>
 				<body className={inter.className}>
-					<Header></Header>
 					<MainDrawer></MainDrawer>
-					{ children }
+					<div className="min-h-screen">
+						<Header></Header>
+						{ children }
+					</div>
 					<Footer></Footer>
 				</body>
 			</Provider>

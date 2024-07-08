@@ -5,6 +5,7 @@ import type ProductData from '@/lib/ProductData'
 
 
 const prisma = new PrismaClient()
+const pageSize = 8  // Pagination property
 
 export async function categoryExistsByName(name: string) {
 	const found = await prisma.category.findUnique({ where: { name } })
@@ -311,5 +312,47 @@ export async function fetchProductNames() {
 		await prisma.$disconnect()
 		process.exit(1)
 	}
+}
+
+export async function productNamesByCategoryName(categoryName: string) {
+	const products= await prisma.product.findMany({
+		where: {
+			category: {
+				name: categoryName,
+			}
+		},
+		select: {
+			name: true,
+		}
+	})
+	return products.map((product) => product.name)
+}
+
+export async function paginatedProductNamesByCategoryName(
+	categoryName: string,
+	page: number,
+) {
+	const currentPage = Number(page)
+	if (currentPage <= 0 || currentPage > 1000000 || Number.isNaN(currentPage)) {
+		return []
+	}
+	const products= await prisma.product.findMany({
+		where: {
+			category: {
+				name: categoryName,
+			}
+		},
+		select: {
+			name: true,
+		},
+		skip: Math.max(pageSize*(currentPage-1), 0),
+		take: pageSize
+	})
+	return products.map((product) => product.name)
+}
+
+export async function productPagesCount() {
+	const result = Math.ceil(Math.max((await prisma.product.count() - 1), 1)/pageSize)
+	return result
 }
 

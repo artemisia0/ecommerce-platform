@@ -13,6 +13,7 @@ import { isDrawerOpenAtom } from '@/lib/drawerState'
 import { fetchCategoryNames } from '@/actions/category'
 import { fetchCollectionNames } from '@/actions/collection'
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 
 
 function SexRadioIcon() {
@@ -96,9 +97,11 @@ export default function MainDrawer() {
 							(label) => (
 								<div key={label} className="flex gap-x-4 hover:gap-x-2 hover:pl-2 text-black font-light text-md">
 									<CategoryItemIcon></CategoryItemIcon>
-									<a className="hover:text-red-900">
-										{label}
-									</a>
+									<Link href={"/category/" + label.replaceAll(" ", "_") + "?page=1"} className="hover:text-red-900">
+										<button onClick={closeDrawer} className="p-0 m-0">
+											{label}
+										</button>
+									</Link>
 								</div>
 							)
 						)}
