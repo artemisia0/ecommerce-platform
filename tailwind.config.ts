@@ -11,7 +11,9 @@ const config: Config = {
     extend: {
     },
   },
-  plugins: [],
+	plugins: [
+		require('tailwind-scrollbar-hide'),
+	],
 };
 
 module.exports = withMT(config)

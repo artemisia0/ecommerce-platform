@@ -64,8 +64,7 @@ export default function ProfileMenu() {
       <MenuHandler>
         <Button
           variant="text"
-          color="blue-gray"
-          className="flex items-center justify-center align-center rounded-full m-0 p-1 backdrop-blur-sm bg-white/50"
+          className="flex items-center justify-center align-center rounded-xl m-0 p-1 backdrop-blur-sm bg-gray-500/10 border border-black/20"
         >
           <ChevronDownIcon
             strokeWidth={2.5}
@@ -87,7 +86,7 @@ export default function ProfileMenu() {
           />
         </Button>
       </MenuHandler>
-      <MenuList className="p-1 border-none shadow bg-transparent backdrop-blur-sm backdrop-saturate-1 bg-white/70">
+      <MenuList className="p-1 bg-transparent backdrop-blur backdrop-saturate-1 bg-gray-500/10 border-black/20 shadow">
         {profileMenuItems.map(({ label, icon }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (

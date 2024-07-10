@@ -114,15 +114,15 @@ export default function Page() {
 	}
 
 	return (
-		<main className="flex flex-col gap-3 justify-center items-center pt-8">
-			<form onSubmit={fetchFormSubmitCallback} className="flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm border border-white rounded bg-white/50 p-3">
+		<main className="min-h-screen flex flex-col gap-3 justify-center items-center pt-8">
+			<form onSubmit={fetchFormSubmitCallback} className="flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm border border-black/20 shadow rounded-lg bg-white/50 p-3">
 				<Input name="categoryName" label="Category Name" crossOrigin=""></Input>
 				{fetchFormStatusMessage.length !== 0 &&
 					<Alert variant="ghost" className="p-2 m-0" icon={fetchFormStatusSuccess ? <InfoIcon /> : <ErrorIcon />}><Typography variant="small" color="black">{fetchFormStatusMessage}</Typography></Alert>
 				}
 				<Button type="submit" color="white" className="bg-blue-900/20">Fetch</Button>
 			</form>
-			<form className="flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm border border-white rounded bg-white/50 p-3">
+			<form className="flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm border border-black/20 shadow rounded-lg bg-white/50 p-3">
 				<Input value={categoryNameValue} onChange={onCategoryNameValueChange} label="Category Name" crossOrigin=""></Input>
 				<Textarea onChange={onCategoryDescriptionValueChange} value={categoryDescriptionValue} label="Category Description"></Textarea>
 				<ListEditor inputType="text" inputLabel="Add product name" listItems={listEditorState} setListItems={setListEditorState}>

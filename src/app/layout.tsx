@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   description: "Website built by artemisia0. This is just an example eCommerce Platform that I can build on my own.",
 };
 
+const bodyStyle = {
+	backgroundImage: "url('/bg.jpg')",
+	backgroundRepeat: "repeat",
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,12 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en">
 			<Provider>
-				<body className={inter.className}>
+				<body className={inter.className} style={bodyStyle}>
 					<MainDrawer></MainDrawer>
-					<div className="min-h-screen">
-						<Header></Header>
-						{ children }
-					</div>
+					<Header></Header>
+					{ children }
 					<Footer></Footer>
 				</body>
 			</Provider>

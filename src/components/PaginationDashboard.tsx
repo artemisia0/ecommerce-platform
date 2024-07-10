@@ -60,7 +60,7 @@ export default function PaginationDashboard({ page, maxPage }: { page: number; m
 	}
 
 	return (
-		<ButtonGroup variant="outlined" className="max-w-[320px] sm:max-w-none">
+		<ButtonGroup variant="outlined" className="rounded-lg bg-white/50 backdrop-blur-sm shadow max-w-[320px] sm:max-w-none">
 
 			<IconButton className="shadow-none" disabled={currentPage <= 1}>
 				<Link href={pageLinks[(currentPage-1).toString()] ?? "/"}>

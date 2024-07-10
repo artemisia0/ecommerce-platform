@@ -3,8 +3,8 @@ import SeeClothButton from '@/components/SeeClothButton'
 
 export default function Page() {
 	return (
-		<main className="flex flex-col justify-center items-center align-center">
-			<SeeClothButton className="mt-80"></SeeClothButton>
+		<main className="flex min-h-screen flex-col justify-center items-center align-center">
+			<SeeClothButton></SeeClothButton>
 		</main>
 	)
 }

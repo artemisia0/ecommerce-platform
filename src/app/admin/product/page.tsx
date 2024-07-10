@@ -183,15 +183,15 @@ export default function Page() {
 	}
 
 	return (
-		<main className="flex flex-col gap-3 justify-center items-center pt-8">
-			<form onSubmit={fetchFormSubmitCallback} className="flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm border border-white rounded bg-white/50 p-3">
+		<main className="flex flex-col gap-3 justify-center items-center min-h-screen">
+			<form onSubmit={fetchFormSubmitCallback} className="flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm border border-black/20 rounded-lg shadow bg-white/50 p-3">
 				<Input name="productName" label="Product Name" crossOrigin=""></Input>
 				{fetchFormStatusMessage.length !== 0 &&
 					<Alert variant="ghost" className="p-2 m-0" icon={fetchFormStatusSuccess ? <InfoIcon /> : <ErrorIcon />}><Typography variant="small" color="black">{fetchFormStatusMessage}</Typography></Alert>
 				}
 				<Button type="submit" color="white" className="bg-blue-900/20">Fetch</Button>
 			</form>
-			<form className="flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm border border-white rounded bg-white/50 p-3">
+			<form className="flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm border border-black/20 rounded-lg shadow bg-white/50 p-3">
 				<Input value={productNameValue} onChange={onProductNameValueChange} label="Product Name" crossOrigin=""></Input>
 				<Textarea onChange={onProductDescriptionValueChange} value={productDescriptionValue} label="Product Description"></Textarea>
 				<Input value={priceInUSDValue} type="number" onChange={onPriceInUSDValueChange} label="Product Price in USD" crossOrigin=""></Input>

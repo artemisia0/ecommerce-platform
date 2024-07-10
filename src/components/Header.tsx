@@ -51,9 +51,9 @@ export default function Header() {
 
 	return (
 		<header className="flex justify-center items-center w-full">
-			<Navbar className="w-full max-w-[960px] backdrop-saturate-1 backdrop-blur-none bg-transparent border-none flex justify-between flex-row items-center align-center p-1 pl-5 rounded-none shadow-none">
+			<Navbar className="w-full max-w-[960px] backdrop-saturate-1 backdrop-blur bg-transparent border-none flex justify-between flex-row items-center align-center p-2 rounded-none shadow">
 				<div className="flex gap-1 text-black items-center hover:text-blue-900">
-					<button onClick={titleButtonCallback} className="text-black cursor-pointer text-xl font-serif font-light p-1 hover:text-black backdrop-blur-sm rounded-lg">
+					<button onClick={titleButtonCallback} className="text-black cursor-pointer text-xl p-1 hover:text-black backdrop-blur-sm rounded-lg">
 						eCommerce Platform
 					</button>
 					<ClickIcon></ClickIcon>
