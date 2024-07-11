@@ -6,16 +6,7 @@ import ProductPreviewImage from '@/components/ProductPreviewImage'
 import { useRef } from 'react'
 
 
-export default function InteractiveProductPreviewCard({ product }:
-{
-	product: {
-		name: string;
-		priceInUSD: number;
-		previewImage: string;
-		extraPreviewImage: string | null;
-		[key: string]: any;
-	}
-}) {
+export default function InteractiveProductPreviewCard({ product }: {product: {[key: string]: any;}}) {
 	const imageRef = useRef({ setHovered: (flag: boolean) => { return; } })
 
 	const onMouseEnter = () => { imageRef.current.setHovered(true) }

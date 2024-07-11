@@ -4,6 +4,7 @@ import { IconButton, Badge } from '@/lib/material-ui'
 import cartStateAtom from '@/lib/cartStateAtom'
 import { useAtomValue } from 'jotai'
 import countCartItems from '@/lib/countCartItems'
+import Link from 'next/link'
 
 
 function CartIcon() {
@@ -19,13 +20,13 @@ export default function CartBadge() {
 	const badgeContent = countCartItems(cartState)
 	
 	return (
-		<div className="m-1">
+		<Link href="/cart" className="m-1">
 			<Badge color="white" className="border border-black/20" content={badgeContent}>
 				<IconButton className="bg-gray-500/10 shadow focus:shadow active:shadow hover:shadow hover:bg-gray-900/10 border border-black/20 text-black bg-white">
 					<CartIcon></CartIcon>
 				</IconButton>
 			</Badge>
-		</div>
+		</Link>
 	)
 }
 

@@ -2,6 +2,7 @@
 
 
 import {
+	Spinner,
 	Alert,
 	Badge,
 	Input,
@@ -27,6 +28,7 @@ import {
 } from '@material-tailwind/react'
 
 export {
+	Spinner,
 	Input,
 	Button,
 	List,
