@@ -30,6 +30,7 @@ import {
 import ProfileMenu from '@/components/ProfileMenu'
 import { isDrawerOpenAtom } from '@/lib/drawerState'
 import { useAtom } from 'jotai'
+import CartBadge from '@/components/CartBadge'
 
 
 function ClickIcon() {
@@ -51,14 +52,17 @@ export default function Header() {
 
 	return (
 		<header className="flex justify-center items-center w-full">
-			<Navbar className="w-full max-w-[960px] backdrop-saturate-1 backdrop-blur bg-transparent border-none flex justify-between flex-row items-center align-center p-2 rounded-none shadow">
+			<Navbar className="gap-3 w-full max-w-[960px] backdrop-saturate-1 backdrop-blur bg-transparent border-none flex justify-between flex-row items-center align-center p-2 rounded-none shadow">
 				<div className="flex gap-1 text-black items-center hover:text-blue-900">
-					<button onClick={titleButtonCallback} className="text-black cursor-pointer text-xl p-1 hover:text-black backdrop-blur-sm rounded-lg">
+					<button onClick={titleButtonCallback} className="text-black cursor-pointer text-2xl p-1 hover:text-black backdrop-blur-sm rounded-lg">
 						eCommerce Platform
 					</button>
 					<ClickIcon></ClickIcon>
 				</div>
-				<ProfileMenu></ProfileMenu>
+				<div className="flex gap-6 justify-center align-center">
+					<CartBadge></CartBadge>
+					<ProfileMenu></ProfileMenu>
+				</div>
 			</Navbar>
 		</header>
 	)

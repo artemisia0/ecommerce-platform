@@ -1,9 +1,24 @@
 'use client'
 
 import { Button } from '@/lib/material-ui'
+import cartStateAtom from '@/lib/cartStateAtom'
+import { useAtom } from 'jotai'
 
 
 export default function ProductViewerDashboard({ product }: { product: {[key: string]: any;} }) {
+	const [cartState, setCartState] = useAtom(cartStateAtom)
+
+	const addToCartCallback = () => {
+		const newCartState: { [key:string]: number; } = {...cartState}
+		if (newCartState[product.name as string] != null) {
+			newCartState[product.name as string] += 1
+		} else {
+			newCartState[product.name as string] = 1
+		}
+		setCartState(newCartState)
+		console.log("ADDED PRODUCT TO CART")
+	}
+
 	return (
 		<div className="overflow-y-scroll scrollbar-hide flex flex-col gap-3 bg-gray-500/10 backdrop-blur w-64 p-3 max-h-[320px] h-min border border-black/20">
 			<p className="text-blue-900 text-center font-light text-lg">
@@ -24,7 +39,7 @@ export default function ProductViewerDashboard({ product }: { product: {[key: st
 				</span>
 				: ${product.priceInUSD}
 			</p>
-			<Button variant="outlined" className="mt-3 rounded-none">
+			<Button variant="outlined" className="mt-3 rounded-none" onClick={addToCartCallback}>
 				Add to Cart
 			</Button>
 		</div>

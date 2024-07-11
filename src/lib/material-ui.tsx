@@ -3,6 +3,7 @@
 
 import {
 	Alert,
+	Badge,
 	Input,
 	Option,
 	Select,
@@ -36,6 +37,7 @@ export {
 	ListItem,
 	Textarea,
 	ButtonGroup,
+	Badge,
 	Navbar,
 	Typography,
 	Menu,
