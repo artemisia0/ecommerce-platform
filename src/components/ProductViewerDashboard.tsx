@@ -3,6 +3,7 @@
 import { Button } from '@/lib/material-ui'
 import cartStateAtom from '@/lib/cartStateAtom'
 import { useAtom } from 'jotai'
+import priceFormatter from '@/lib/priceFormatter'
 
 
 export default function ProductViewerDashboard({ product }: { product: {[key: string]: any;} }) {
@@ -16,7 +17,6 @@ export default function ProductViewerDashboard({ product }: { product: {[key: st
 			newCartState[product.name as string] = 1
 		}
 		setCartState(newCartState)
-		console.log("ADDED PRODUCT TO CART")
 	}
 
 	return (
@@ -37,7 +37,7 @@ export default function ProductViewerDashboard({ product }: { product: {[key: st
 				<span className="font-bold">
 					price
 				</span>
-				: ${product.priceInUSD}
+				: ${priceFormatter.format(product.priceInUSD)}
 			</p>
 			<Button variant="outlined" className="mt-3 rounded-none" onClick={addToCartCallback}>
 				Add to Cart
