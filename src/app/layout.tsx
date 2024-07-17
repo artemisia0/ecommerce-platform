@@ -5,6 +5,8 @@ import Provider from '@/components/Provider'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import MainDrawer from '@/components/MainDrawer'
+import { getSession } from '@/actions/session'
+import sessionDataFromSession from '@/lib/sessionDataFromSession'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,17 +20,19 @@ const bodyStyle = {
 	backgroundRepeat: "repeat",
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+	const sessionData = sessionDataFromSession(await getSession())
+
   return (
     <html lang="en">
 			<Provider>
 				<body className={inter.className} style={bodyStyle}>
 					<MainDrawer></MainDrawer>
-					<Header></Header>
+					<Header sessionData={sessionData}></Header>
 					{ children }
 					<Footer></Footer>
 				</body>

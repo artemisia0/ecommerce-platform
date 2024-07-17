@@ -4,10 +4,11 @@ import ProductPreviewCard from '@/components/ProductPreviewCard'
 import PaginationDashboard from '@/components/PaginationDashboard'
 
 
-export default async function CategoryPage({ params, searchParams }: { params: { categoryName: string; }; searchParams: { page: number; }; }) {
+export default async function CategoryPage({ params, searchParams }: { params: { categoryName: string;  }; searchParams: { sex: "man" | "woman" | "unisex" | "other"; page: number; }; }) {
 	const categoryName = params.categoryName.replaceAll("_", " ")
 	const productNames = await paginatedProductNamesByCategoryName(
 		categoryName,
+		searchParams.sex,
 		Number(searchParams.page),
 	)
 	const maxPage = await productPagesCount()

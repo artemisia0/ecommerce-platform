@@ -20,7 +20,7 @@ export default function ProductViewerDashboard({ product }: { product: {[key: st
 	}
 
 	return (
-		<div className="overflow-y-scroll scrollbar-hide flex flex-col gap-3 bg-gray-500/10 backdrop-blur w-64 p-3 max-h-[320px] h-min border border-black/20">
+		<div className="overflow-y-scroll scrollbar-hide flex flex-col gap-3 bg-gray-500/10 backdrop-blur p-3 border border-black/20 max-w-[480px]">
 			<p className="text-blue-900 text-center font-light text-lg">
 				{product.name}
 			</p>

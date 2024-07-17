@@ -13,19 +13,19 @@ function AdminIcon() {
 export default function Page() {
 	return (
 		<main className="flex flex-col gap-3 justify-center items-center min-h-screen">
-			<div className="flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm border border-white rounded-lg bg-white/50 shadow border border-black/20 p-3">
+			<div className="border border-black/20 flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm rounded-lg bg-white/50 shadow border border-black/20 p-3">
 				<p className="text-lg"><span className="font-bold">Products</span> management page</p>
 				<Link href="/admin/product">
 					<Button color="white" className="bg-blue-900/20">Go</Button>
 				</Link>
 			</div>
-			<div className="flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm border border-white rounded-lg bg-white/50 p-3 shadow border border-black/20">
+			<div className="flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm rounded-lg bg-white/50 p-3 shadow border border-black/20">
 				<p className="text-lg"><span className="font-bold">Categories</span> management page</p>
 				<Link href="/admin/category">
 					<Button color="white" className="bg-blue-900/20">Go</Button>
 				</Link>
 			</div>
-			<div className="flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm border border-white rounded-lg bg-white/50 p-3 shadow border border-black/20">
+			<div className="flex flex-col gap-3 justify-center items-center w-full max-w-96 backdrop-blur-sm rounded-lg bg-white/50 p-3 shadow border border-black/20">
 				<p className="text-lg"><span className="font-bold">Collections</span> management page</p>
 				<Link href="/admin/collection">
 					<Button color="white" className="bg-blue-900/20">Go</Button>

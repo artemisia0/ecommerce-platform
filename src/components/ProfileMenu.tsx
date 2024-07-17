@@ -28,36 +28,59 @@ import {
   PowerIcon,
   RocketLaunchIcon,
   Bars2Icon,
+	ArrowRightEndOnRectangleIcon,
+	UserPlusIcon,
 } from "@heroicons/react/24/solid";
 
- 
-const profileMenuItems = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-  },
-  {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-  },
-  {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
-  },
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-  },
-];
- 
-export default function ProfileMenu() {
+
+export default function ProfileMenu(props: { [key: string]: any; }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
  
   const closeMenu = () => setIsMenuOpen(false);
+
+	const makeMenuItem = (label: string, icon: any, isRed?: boolean) => (
+		<MenuItem
+			key={label}
+			onClick={closeMenu}
+			className={`flex items-center gap-2 rounded ${
+				isRed
+					? "hover:bg-red-900/10 focus:bg-red-900/10 active:bg-red-900/10"
+					: "hover:bg-black/10 focus:bg-black/10 active:bg-black/10"
+			}`}
+		>
+			{React.createElement(icon, {
+				className: `h-4 w-4 ${isRed ? "text-red-500" : ""}`,
+				strokeWidth: 2,
+			})}
+			<Typography
+				as="span"
+				variant="small"
+				className="font-normal"
+				color={isRed ? "red" : "black"}
+			>
+				{label}
+			</Typography>
+		</MenuItem>
+	)
+ 
+	const menuItems = []
+
+	if (props.sessionData.username != null)	{
+		menuItems.push(makeMenuItem("My Profile", UserCircleIcon))
+		menuItems.push(makeMenuItem("Edit Profile", Cog6ToothIcon))
+		menuItems.push(makeMenuItem("Inbox", InboxArrowDownIcon))
+	} else {
+		menuItems.push(makeMenuItem("Sign In", ArrowRightEndOnRectangleIcon))
+		menuItems.push(makeMenuItem("Sign Up", UserPlusIcon))
+	}
+	menuItems.push(makeMenuItem("Help", LifebuoyIcon))
+	if (props.sessionData.username != null)	{
+		menuItems.push(makeMenuItem("Sign Out", PowerIcon, true))
+	}
+
+	// menu items (these 'sign out', 'profile' buttons)
+	// should be here in list and be edited depending on
+	// props.sessionData?.userRoleRank
  
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -87,34 +110,8 @@ export default function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1 bg-transparent backdrop-blur backdrop-saturate-1 bg-gray-500/10 border-black/20 shadow">
-        {profileMenuItems.map(({ label, icon }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
-          return (
-            <MenuItem
-              key={label}
-              onClick={closeMenu}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : "hover:bg-black/10 focus:bg-black/10 active:bg-black/10"
-              }`}
-            >
-              {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "black"}
-              >
-                {label}
-              </Typography>
-            </MenuItem>
-          );
-        })}
-      </MenuList>
+				{ menuItems }
+     </MenuList>
     </Menu>
   );
 }

@@ -106,7 +106,7 @@ async function categoryDataValidnessStatus(categoryData: CategoryData) {
 		}
 	}
 
-	const categoryNameRegex = /^[a-zA-Zs]+$/
+	const categoryNameRegex = /^[a-zA-Z0-9 _]+$/
 	if (!categoryNameRegex.test(categoryData.name)) {
 		return {
 			statusMessage: "Name can contain letters and digits only.",

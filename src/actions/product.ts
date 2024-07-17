@@ -330,6 +330,7 @@ export async function productNamesByCategoryName(categoryName: string) {
 
 export async function paginatedProductNamesByCategoryName(
 	categoryName: string,
+	sex: "man" | "woman" | "unisex" | "other",
 	page: number,
 ) {
 	const currentPage = Number(page)
@@ -338,6 +339,7 @@ export async function paginatedProductNamesByCategoryName(
 	}
 	const products= await prisma.product.findMany({
 		where: {
+			sex: sex,
 			category: {
 				name: categoryName,
 			}

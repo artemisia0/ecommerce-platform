@@ -42,7 +42,7 @@ function ClickIcon() {
 }
 
 
-export default function Header() {
+export default function Header(props: { [key: string]: any; }) {
 	const [isDrawerOpen, setIsDrawerOpen] = useAtom(isDrawerOpenAtom)
 
 	const titleButtonCallback = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -61,7 +61,7 @@ export default function Header() {
 				</div>
 				<div className="flex gap-6 justify-center align-center">
 					<CartBadge></CartBadge>
-					<ProfileMenu></ProfileMenu>
+					<ProfileMenu sessionData={props.sessionData}></ProfileMenu>
 				</div>
 			</Navbar>
 		</header>

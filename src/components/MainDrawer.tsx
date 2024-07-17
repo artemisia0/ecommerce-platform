@@ -49,13 +49,18 @@ function CollectionItemIconRight() {
 }
 
 export default function MainDrawer() {
+	const [sexValue, setSexValue] = useState("unisex")
 	const [categoryLabels, setCategoryLabels] = useState(["Chinos Pants", "Jeans Pants", "Jeans Jackets", "Formal Shirts", "T-Shirs", "Sweaters", "Suits"])
 	const [collectionLabels, setCollectionLabels] = useState(["Hot Summer 2024", "Coolest Winter 2024", "Beach & Surfing & Sun", "Formal Suit Classics", "Limited Edition 2024", "Luxury Autumn 2024", "Happy Spring 2024"])
 	const [isDrawerOpen, setIsDrawerOpen] = useAtom(isDrawerOpenAtom)
 
+	const onSexValueChange = (event: any) => {
+		setSexValue(event.target.value)
+	}
+
 	const closeDrawer = () => setIsDrawerOpen(false)
 
-	const sexLabels = ["Man", "Woman", "Unisex", "Other"]
+	const sexLabels = ["man", "woman", "unisex", "other"]
 	useEffect(
 		() => {
 			fetchCategoryNames().then(res => setCategoryLabels(res))
@@ -81,7 +86,7 @@ export default function MainDrawer() {
 				<div className="grid grid-cols-2 p-6">
 					{sexLabels.map(
 						(label) => (
-							<Radio key={label} crossOrigin="" ripple={false} className="p-0 m-0 h-4 w-4 ransition-all hover:before:opacity-0 border-none" label={<Typography className="text-black font-light text-md hover:text-red-900">{label}</Typography>} name="sex" icon={<SexRadioIcon />} defaultChecked={label === sexLabels[0]}></Radio>
+							<Radio value={label} name="sex" onChange={onSexValueChange} key={label} crossOrigin="" ripple={false} className="p-0 m-0 h-4 w-4 ransition-all hover:before:opacity-0 border-none" label={<Typography className="text-black font-light text-md hover:text-red-900">{label}</Typography>} icon={<SexRadioIcon />} checked={label === sexValue}></Radio>
 						)
 					)}
 				</div>
@@ -97,7 +102,7 @@ export default function MainDrawer() {
 							(label) => (
 								<div key={label} className="flex gap-x-4 hover:gap-x-2 hover:pl-2 text-black font-light text-md">
 									<CategoryItemIcon></CategoryItemIcon>
-									<Link href={"/category/" + label.replaceAll(" ", "_") + "?page=1"} className="hover:text-red-900">
+									<Link href={"/category/" + label.replaceAll(" ", "_") + "?page=1&sex=" + sexValue} className="hover:text-red-900">
 										<button onClick={closeDrawer} className="p-0 m-0">
 											{label}
 										</button>

@@ -3,9 +3,9 @@ module.exports = {
   images: {
 		remotePatterns: [
 			{
-				protocol: "https",
-				hostname: "via.placeholder.com",
-				port: "",
+				protocol: "http",
+				hostname: "localhost",
+				port: "3000",
 				pathname: "/**",
 			},
 		]

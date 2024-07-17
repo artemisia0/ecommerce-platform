@@ -43,3 +43,10 @@ model Category {
 	products			Product[]
 }
 
+model User {
+	id						Int @id @default(autoincrement())
+	username			String @unique
+	hashedPassword String
+	userRoleRank	Int @default(0)
+}
+
