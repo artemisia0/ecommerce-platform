@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 
 import {
   Navbar,
@@ -38,44 +39,46 @@ export default function ProfileMenu(props: { [key: string]: any; }) {
  
   const closeMenu = () => setIsMenuOpen(false);
 
-	const makeMenuItem = (label: string, icon: any, isRed?: boolean) => (
+	const makeMenuItem = (label: string, icon: any, linkHref: string, isRed?: boolean) => (
 		<MenuItem
 			key={label}
 			onClick={closeMenu}
-			className={`flex items-center gap-2 rounded ${
+			className={`p-0 ${
 				isRed
 					? "hover:bg-red-900/10 focus:bg-red-900/10 active:bg-red-900/10"
 					: "hover:bg-black/10 focus:bg-black/10 active:bg-black/10"
 			}`}
 		>
-			{React.createElement(icon, {
-				className: `h-4 w-4 ${isRed ? "text-red-500" : ""}`,
-				strokeWidth: 2,
-			})}
-			<Typography
-				as="span"
-				variant="small"
-				className="font-normal"
-				color={isRed ? "red" : "black"}
-			>
-				{label}
-			</Typography>
+			<Link href={linkHref} className={`rounded m-1 p-2 flex items-center gap-2`}>
+				{React.createElement(icon, {
+					className: `h-4 w-4 ${isRed ? "text-red-500" : ""}`,
+					strokeWidth: 2,
+				})}
+				<Typography
+					as="span"
+					variant="small"
+					className="font-normal"
+					color={isRed ? "red" : "black"}
+				>
+					{label}
+				</Typography>
+			</Link>
 		</MenuItem>
 	)
  
 	const menuItems = []
 
 	if (props.sessionData.username != null)	{
-		menuItems.push(makeMenuItem("My Profile", UserCircleIcon))
-		menuItems.push(makeMenuItem("Edit Profile", Cog6ToothIcon))
-		menuItems.push(makeMenuItem("Inbox", InboxArrowDownIcon))
+		menuItems.push(makeMenuItem("My Profile", UserCircleIcon, "/myprofile"))
+		menuItems.push(makeMenuItem("Edit Profile", Cog6ToothIcon, "/editprofile"))
+		menuItems.push(makeMenuItem("Inbox", InboxArrowDownIcon, "/inbox"))
 	} else {
-		menuItems.push(makeMenuItem("Sign In", ArrowRightEndOnRectangleIcon))
-		menuItems.push(makeMenuItem("Sign Up", UserPlusIcon))
+		menuItems.push(makeMenuItem("Sign In", ArrowRightEndOnRectangleIcon, "/signin"))
+		menuItems.push(makeMenuItem("Sign Up", UserPlusIcon, "/signup"))
 	}
-	menuItems.push(makeMenuItem("Help", LifebuoyIcon))
+	menuItems.push(makeMenuItem("Help", LifebuoyIcon, "/help"))
 	if (props.sessionData.username != null)	{
-		menuItems.push(makeMenuItem("Sign Out", PowerIcon, true))
+		menuItems.push(makeMenuItem("Sign Out", PowerIcon, "/signout", true))
 	}
 
 	// menu items (these 'sign out', 'profile' buttons)
