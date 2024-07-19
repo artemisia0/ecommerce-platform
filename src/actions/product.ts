@@ -358,3 +358,19 @@ export async function productPagesCount() {
 	return result
 }
 
+export async function fetchProductPriceByName(productName: string) {
+	try {
+		return (await prisma.product.findUniqueOrThrow({
+			where: {
+				name: productName,
+			},
+			select: {
+				priceInUSD: true,
+			}
+		})).priceInUSD
+	} catch (err) {
+		console.error(err)
+		return 0
+	}
+}
+

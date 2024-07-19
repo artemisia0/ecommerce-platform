@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/lib/material-ui'
 import priceFormatter from '@/lib/priceFormatter'
 import { calcOverallPrice, overallPriceAtom } from '@/lib/overallPrice'
+import Link from 'next/link'
 
 
 type ProductDataStore = { [key: string]: { [key: string]: any; }; }
@@ -70,10 +71,12 @@ export default function Page() {
 		<main className="min-h-screen flex flex-col gap-3 items-center align-center pt-8">
 			<div className="flex flex-col gap-3 backdrop-blur bg-gray-500/10 border border-black/20 rounded-lg shadow p-3 justify-center items-center align-center w-64">
 				<span className="font-bold text-red-900">- ${priceFormatter.format(overallPrice)}</span>
-				<Button variant="outlined" className="bg-blue-900/20 flex gap-3 justify-center items-center align-center p-2 w-full text-md" onClick={payCallback}>
-					Pay
-					<CreditCardIcon />
-				</Button>
+				<Link href="/payment">
+					<Button variant="outlined" className="bg-blue-900/20 flex gap-3 justify-center items-center align-center p-2 w-full text-md" onClick={payCallback}>
+						Pay
+						<CreditCardIcon />
+					</Button>
+				</Link>
 			</div>
 			<div className="flex flex-wrap w-full max-w-[960px] justify-center items-center align-center gap-6 p-6">
 				{Object.keys(cartState).map(
