@@ -31,7 +31,10 @@ import {
   Bars2Icon,
 	ArrowRightEndOnRectangleIcon,
 	UserPlusIcon,
+	CommandLineIcon,
 } from "@heroicons/react/24/solid";
+
+import { userRoleRankAdmin } from '@/lib/userRoleRank'
 
 
 export default function ProfileMenu(props: { [key: string]: any; }) {
@@ -77,13 +80,12 @@ export default function ProfileMenu(props: { [key: string]: any; }) {
 		menuItems.push(makeMenuItem("Sign Up", UserPlusIcon, "/signup"))
 	}
 	menuItems.push(makeMenuItem("Help", LifebuoyIcon, "/help"))
+	if (props.sessionData.userRoleRank >= userRoleRankAdmin) {
+		menuItems.push(makeMenuItem("Admin Dashboard", CommandLineIcon, "/admin"))
+	}
 	if (props.sessionData.username != null)	{
 		menuItems.push(makeMenuItem("Sign Out", PowerIcon, "/signout", true))
 	}
-
-	// menu items (these 'sign out', 'profile' buttons)
-	// should be here in list and be edited depending on
-	// props.sessionData?.userRoleRank
  
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">

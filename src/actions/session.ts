@@ -8,7 +8,6 @@ export async function getSession(): Promise<{ [key: string]: any; }> {
 	if (process.env.IRON_SESSION_SECRET == null ||
 		process.env.IRON_SESSION_COOKIE_NAME == null) {
 		console.error("IRON_SESSION_COOKIE_NAME or IRON_SESSION_SECRET not set.")
-		process.exit(1)
 	}
 
 	const session = await getIronSession(cookies(), {
