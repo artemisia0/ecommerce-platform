@@ -1,32 +1,55 @@
-# ecommerce-platform
+# E-commerce Platform
 
-**Click on this image to see what this website looks like.**
-[![Video](https://img.youtube.com/vi/5PtVlJK-Azg/0.jpg)](https://www.youtube.com/watch?v=5PtVlJK-Azg)
+[Demo video](https://www.youtube.com/watch?v=5PtVlJK-Azg)
 
-## Description
-This project represents by itself an example eCommerce platform that I can develop. I am not a web designer thus design of this website is not very beautiful... :)
+---
+
+## Overview
+This project is an educational full-stack e-commerce application built to demonstrate core web development concepts, including authentication, role-based access control, data modeling, and payment integration. The focus is on functionality and architecture rather than visual design.
+
+---
 
 ## Features
-* auth (sign in, sign up, sign out)
-    * user roles (regular user, admin, manager, CEO)
-    * admin has an Admin Dashboard (there are CRUD operations for products, categories and collections)
-* page /category/... has pagination
-* online payment by card
-* shopping cart and an ability to edit quantity of every cart's item
-* product listings with an extra image preview on hover
 
-### Tech stack
-* iron session
-* bcrypt
-* next.js (app router)
-* prisma ORM (PostgreSQL)
-* stripe
-* typescript
-* heroicons
-* material-tailwind
-* tailwind-css
-* jotai
+### Authentication & Authorization
+- User authentication (sign up, sign in, sign out)
+- Role-based access control:
+  - Regular user
+  - Admin
 
-#### Notes
-I also used React Suspense (async server components + loading.tsx from next.js).
+### Admin Dashboard
+- Accessible to admin users
+- CRUD operations for:
+  - Products
+  - Categories
+  - Collections
 
+### Store Functionality
+- Product listings with image preview on hover
+- Category pages with pagination
+- Shopping cart with editable item quantities
+- Online card payments via Stripe (test mode)
+
+---
+
+## Tech Stack
+
+### Frontend
+- Next.js (App Router)
+- React (Server Components, Suspense)
+- TypeScript
+- Tailwind CSS
+- Material Tailwind
+- Heroicons
+- Jotai
+
+### Backend / Infrastructure
+- Prisma ORM (PostgreSQL)
+- iron-session
+- bcrypt
+- Stripe
+
+---
+
+## Purpose
+This project was built as a learning and portfolio application to practice full-stack development patterns and modern Next.js features. It is not intended to be production-ready.
